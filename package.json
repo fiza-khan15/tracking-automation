@@ -1,0 +1,25 @@
+{
+  "name": "tracking-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node scripts/generate-schema.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiza-khan15/tracking-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/fiza-khan15/tracking-automation/issues"
+  },
+  "homepage": "https://github.com/fiza-khan15/tracking-automation#readme",
+  "dependencies": {
+    "googleapis": "^171.4.0"
+  }
+}
+
