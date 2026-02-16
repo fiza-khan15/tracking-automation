@@ -43,10 +43,22 @@ async function generateSchema() {
     }
   });
 
-  fs.writeFileSync(
-    "tracking-plan.json",
-    JSON.stringify(schema, null, 2)
-  );
+  // fs.writeFileSync(
+  //   "tracking-plan.json",
+  //   JSON.stringify(schema, null, 2)
+  // );
+
+  fs.mkdirSync("generated", { recursive: true });
+
+fs.writeFileSync(
+  "generated/schema.json",
+  JSON.stringify(schema, null, 2)
+);
+
+fs.writeFileSync(
+  "generated/tracking-helper.js",
+  helperCode
+);
 
   console.log("Tracking schema generated.");
 }
