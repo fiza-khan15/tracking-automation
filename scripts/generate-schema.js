@@ -48,6 +48,17 @@ async function generateSchema() {
   //   JSON.stringify(schema, null, 2)
   // );
 
+  const helperCode = `
+window.dataLayer = window.dataLayer || [];
+
+function trackEvent(eventName, params = {}) {
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+}
+`;
+
   fs.mkdirSync("generated", { recursive: true });
 
 fs.writeFileSync(
