@@ -18,40 +18,41 @@ const auth = new google.auth.GoogleAuth({
 
 const SHEET_ID = "1RHylbkb98MrWq6Tzb993t-H5jHLJ01c9cSM0WnTED3Q";
 const RANGE = "Sheet1!A2:D1000";
-const rows = response.data.values;
-console.log("ROWS FROM SHEET:");
-console.log(JSON.stringify(rows, null, 2));
 
 async function generateSchema() {
-  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    const sheets = google.sheets({ version: "v4", auth });
 
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: SHEET_ID,
-    range: RANGE,
-  });
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: SHEET_ID,
+      range: RANGE,
+    });
 
-  const rows = response.data.values;
+    const rows = response.data.values;
 
-  const schema = {};
+    console.log("ROWS FROM SHEET:");
+    console.log(JSON.stringify(rows, null, 2));
 
-  rows.forEach(([event, param, required, type]) => {
-    if (!schema[event]) {
-      schema[event] = { required: {}, optional: {} };
+    if (!rows || rows.length === 0) {
+      console.log("No data found in sheet.");
+      return;
     }
 
-    if (required === "TRUE") {
-      schema[event].required[param] = type;
-    } else {
-      schema[event].optional[param] = type;
-    }
-  });
+    const schema = {};
 
-  // fs.writeFileSync(
-  //   "tracking-plan.json",
-  //   JSON.stringify(schema, null, 2)
-  // );
+    rows.forEach(([event, param, required, type]) => {
+      if (!schema[event]) {
+        schema[event] = { required: {}, optional: {} };
+      }
 
-  const helperCode = `
+      if (required === "TRUE") {
+        schema[event].required[param] = type;
+      } else {
+        schema[event].optional[param] = type;
+      }
+    });
+
+    const helperCode = `
 window.dataLayer = window.dataLayer || [];
 
 function trackEvent(eventName, params = {}) {
@@ -62,19 +63,22 @@ function trackEvent(eventName, params = {}) {
 }
 `;
 
-  fs.mkdirSync("generated", { recursive: true });
+    fs.mkdirSync("generated", { recursive: true });
 
-fs.writeFileSync(
-  "generated/schema.json",
-  JSON.stringify(schema, null, 2)
-);
+    fs.writeFileSync(
+      "generated/schema.json",
+      JSON.stringify(schema, null, 2)
+    );
 
-fs.writeFileSync(
-  "generated/tracking-helper.js",
-  helperCode
-);
+    fs.writeFileSync(
+      "generated/tracking-helper.js",
+      helperCode
+    );
 
-  console.log("Tracking schema generated.");
+    console.log("Tracking schema generated successfully.");
+  } catch (error) {
+    console.error("Error generating schema:", error);
+  }
 }
 
 generateSchema();
