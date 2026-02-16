@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-        uses: actions/checkout@
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -33,16 +30,7 @@ jobs:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Commit Generated Files
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Auto-generate tracking files" || echo "No changes"
-          git push
-        # uses: EndBug/add-and-commit@v9
-        # uses: EndBug/add-and-commit@v3
-        # with:
-        #   add: '.'
-        #   message: 'Auto-generate tracking files'
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          message: 'Auto-generate tracking files'
