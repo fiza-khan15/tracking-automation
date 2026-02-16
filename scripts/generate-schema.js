@@ -18,6 +18,9 @@ const auth = new google.auth.GoogleAuth({
 
 const SHEET_ID = "1RHylbkb98MrWq6Tzb993t-H5jHLJ01c9cSM0WnTED3Q";
 const RANGE = "Sheet1!A2:D1000";
+const rows = response.data.values;
+console.log("ROWS FROM SHEET:");
+console.log(JSON.stringify(rows, null, 2));
 
 async function generateSchema() {
   const sheets = google.sheets({ version: "v4", auth });
