@@ -39,6 +39,7 @@ jobs:
           git add .
           git commit -m "Auto-generate tracking files" || echo "No changes"
           git push
+        uses: EndBug/add-and-commit@v9
         uses: EndBug/add-and-commit@v3
         with:
           add: '.'
