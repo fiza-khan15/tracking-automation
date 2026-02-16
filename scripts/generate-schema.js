@@ -17,7 +17,7 @@ const auth = new google.auth.GoogleAuth({
 });
 
 const SHEET_ID = "1RHylbkb98MrWq6Tzb993t-H5jHLJ01c9cSM0WnTED3Q";
-const RANGE = "Sheet1!A2:D";
+const RANGE = "Sheet1!A2:D1000";
 
 async function generateSchema() {
   const sheets = google.sheets({ version: "v4", auth });
