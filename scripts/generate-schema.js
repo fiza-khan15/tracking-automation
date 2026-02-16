@@ -1,8 +1,18 @@
+// import fs from "fs";
+// import { google } from "googleapis";
+
+// const auth = new google.auth.GoogleAuth({
+//   credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
+//   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+// });
+
 import fs from "fs";
 import { google } from "googleapis";
 
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+
 const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
+  credentials,
   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
